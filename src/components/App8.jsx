@@ -1,25 +1,30 @@
-import React from 'react';
-import "./App8.css"
+import React from "react";
+import { useState, useEffect } from "react";
 export default function App8() {
+  const [amount, setAmount] = useState([]);
+  const [value, setValue] = useState();
+  const [total, setTotal] = useState(0);
+  const handleAdd = () => {
+    setAmount([...amount, value]);
+  };
+  useEffect(() => {
+    setTotal(
+      amount.reduce((s, value) => {
+        return s + Number(value);
+      }, 0)
+    );
+  }, [amount]);
   return (
-    <div className="main" >
-      <div >
-        <div className="col"><h2>React store</h2>
-       <div> <a href="#"> Home |</a>
-        <a href="#"> Cart |</a>
-        <a href="#"> Login </a>
-        </div>
-        </div>
-      <div>
-        <h3>Registration Form</h3>
-        <p><input type="name" placeholder="Enter name" /></p>
-        <p><input type="email" placeholder="Email address" /></p>
-        <p><input type="password" placeholder="New Password" /></p>
-        <p ><button>Submit</button></p>
-        <div> <a href="#" >Already have an Account? Log In</a></div>
-        <p>@Copyright 2025.All rights reserved.</p>
-      </div>
-    </div>
+    <div>
+      <input
+        type="number"
+        onChange={(e) => setValue(e.target.value)}
+        placeholder="Enter Amount"
+      ></input>
+      <button onClick={handleAdd}>Add</button>
+      <hr></hr>
+      {amount && amount.map((value, index) => <div key={index}>{value}</div>)}
+      Total:{total}
     </div>
   );
 }
